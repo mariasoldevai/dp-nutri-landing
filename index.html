@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DP.Nutri — Alto Rendimiento Estético. Nutrición científica para transformar tu composición corporal con el Método FORM.">
+    <title>DP.Nutri — Nutrición Científica para Alto Rendimiento Estético</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAFAF8;
+            --cream2: #DEDACF;
+            --sand: #BBBBA6;
+            --blush: #F2E2D7;
+            --sage: #C2D3CC;
+            --teal: #7AB5BD;
+            --terra: #C38774;
+            --slate: #607581;
+            --slate2: #4A5A65;
+            --danger: #A0413A;
+            --danger2: #F7EEEC;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--cream);
+            color: var(--slate);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(250, 250, 248, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--sand);
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 18px;
+            letter-spacing: 4px;
+            color: var(--slate2);
+            text-decoration: none;
+        }
+
+        .nav-logo svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--sand);
+            text-decoration: none;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'DM Mono', monospace;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--terra);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .nav-links { display: none; }
+        }
+
+        /* HERO */
+        .hero {
+            padding: 120px 40px 80px;
+            margin-top: 72px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero > div {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--terra);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.6s forwards 0.1s;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(56px, 8vw, 96px);
+            line-height: 1;
+            letter-spacing: 2px;
+            color: var(--slate2);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.7s forwards 0.2s;
+        }
+
+        .hero-sub {
+            max-width: 560px;
+            color: var(--slate);
+            font-size: 16px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeUp 0.7s forwards 0.3s;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            opacity: 0;
+            animation: fadeUp 0.7s forwards 0.4s;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 3px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--terra);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #B37565;
+            box-shadow: 0 8px 24px rgba(195, 135, 116, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--slate2);
+            border: 1px solid var(--sand);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--terra);
+            color: var(--terra);
+        }
+
+        /* SECTIONS */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            border-top: 1px solid var(--sand);
+        }
+
+        .section-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--terra);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(36px, 5vw, 56px);
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            color: var(--slate2);
+        }
+
+        .section-intro {
+            color: var(--slate);
+            font-size: 15px;
+            margin-bottom: 48px;
+            max-width: 620px;
+            line-height: 1.8;
+        }
+
+        /* PILARES */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1px;
+            background: var(--sand);
+            border: 1px solid var(--sand);
+        }
+
+        .pillar-card {
+            background: var(--cream2);
+            padding: 36px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.25s;
+            cursor: default;
+        }
+
+        .pillar-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            background: var(--terra);
+            transition: width 0.35s ease;
+        }
+
+        .pillar-card:hover {
+            background: var(--blush);
+        }
+
+        .pillar-card:hover::after {
+            width: 100%;
+        }
+
+        .pillar-num {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 48px;
+            color: var(--sand);
+            line-height: 1;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .pillar-card:hover .pillar-num {
+            color: var(--terra);
+        }
+
+        .pillar-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            color: var(--slate2);
+        }
+
+        .pillar-desc {
+            font-size: 14px;
+            color: var(--slate);
+            line-height: 1.7;
+        }
+
+        /* MÉTODO FORM */
+        .metodo-header {
+            background: var(--slate2);
+            color: white;
+            padding: 40px;
+            margin-bottom: 1px;
+        }
+
+        .metodo-header h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 36px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .metodo-video {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px auto 60px;
+            max-width: 540px;
+            background: var(--cream2);
+            border: 1px solid var(--sand);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .metodo-video iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1px;
+            background: var(--sand);
+            border: 1px solid var(--sand);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .phase-card {
+            background: var(--sage);
+            padding: 48px 40px;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: transform 0.36s ease, box-shadow 0.36s ease;
+            will-change: transform, opacity;
+            animation: cardFadeUp 0.6s forwards;
+        }
+
+        .phase-num {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 72px;
+            letter-spacing: 2px;
+            color: var(--terra);
+            line-height: 0.9;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .phase-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 20px;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            color: var(--slate2);
+            text-transform: uppercase;
+        }
+
+        .phase-desc {
+            font-size: 13px;
+            color: var(--terra);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .phase-card > p.phase-desc {
+            font-size: 14px;
+            color: var(--slate);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .phase-benefits {
+            font-size: 13px;
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .phase-benefits li {
+            margin-bottom: 12px;
+            color: var(--slate);
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .phase-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--terra);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .phases-grid .phase-card:nth-child(1) { animation-delay: 0.08s; }
+        .phases-grid .phase-card:nth-child(2) { animation-delay: 0.18s; }
+        .phases-grid .phase-card:nth-child(3) { animation-delay: 0.28s; }
+        .phases-grid .phase-card:nth-child(4) { animation-delay: 0.38s; }
+
+        .phase-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(96,117,129,0.08);
+        }
+
+        @keyframes cardFadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* BIO INSTAGRAM */
+        .bio-section {
+            background: var(--cream2);
+            border: 1px solid var(--sand);
+            padding: 48px;
+        }
+
+        .bio-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--terra);
+            margin-bottom: 12px;
+        }
+
+        .bio-lines {
+            font-size: 18px;
+            line-height: 2;
+            color: var(--slate2);
+            margin-bottom: 32px;
+        }
+
+        .bio-line {
+            margin-bottom: 12px;
+        }
+
+        .bio-line strong {
+            font-weight: 600;
+            color: var(--terra);
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .contact-info {
+            background: var(--cream2);
+            border: 1px solid var(--sand);
+            padding: 40px;
+        }
+
+        .contact-info h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 28px;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            color: var(--slate2);
+        }
+
+        .contact-info p {
+            color: var(--slate);
+            font-size: 14px;
+            margin-bottom: 28px;
+            line-height: 1.8;
+        }
+
+        .contact-details {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .contact-details li {
+            margin-bottom: 14px;
+            font-size: 14px;
+            color: var(--slate);
+        }
+
+        .contact-details strong {
+            color: var(--slate2);
+            font-weight: 600;
+        }
+
+        .contact-details a {
+            color: var(--terra);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-details a:hover {
+            color: #B37565;
+        }
+
+        .contact-form {
+            background: var(--cream2);
+            border: 1px solid var(--sand);
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--sand);
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--sand);
+            background: var(--cream);
+            color: var(--slate);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            border-radius: 3px;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--terra);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--sand);
+            background: var(--cream);
+            padding: 48px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 24px;
+            letter-spacing: 4px;
+            color: var(--slate2);
+        }
+
+        .footer-brand span {
+            color: var(--terra);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--sand);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--terra);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 80px 20px 60px; }
+            .hero > div { grid-template-columns: 1fr; gap: 32px; }
+            section { padding: 60px 20px; }
+            .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+            .contact-video { margin-top: 20px; }
+            .phases-grid { grid-template-columns: 1fr; }
+            .phase-card { padding: 36px 28px; }
+            footer { grid-template-columns: 1fr; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+
+    <nav>
+        <a href="#inicio" class="nav-logo">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="48" fill="none" stroke="#C38774" stroke-width="1.5"/>
+                <text x="50" y="60" font-family="'Bebas Neue', cursive" font-size="36" font-weight="bold" text-anchor="middle" fill="#C38774">DP</text>
+            </svg>
+            DP<span style="color: var(--terra);">.</span>NUTRI
+        </a>
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#pilares">Pilares</a></li>
+            <li><a href="#metodo">Método FORM</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="https://dpnutri.mitiendanube.com/" target="_blank">Tienda</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; max-width: 1200px; margin: 0 auto;">
+            <div>
+                <p class="hero-label">NUTRICIÓN CIENTÍFICA PARA ALTO RENDIMIENTO ESTÉTICO</p>
+                <h1>Transformá tu composición corporal con ciencia</h1>
+                <p class="hero-sub">El Método FORM es un protocolo nutricional personalizado diseñado para ayudarte a lograr la mejor versión de ti. Basado en análisis de bioimpedancia, seguimiento de datos y ajustes precisos.</p>
+                <div class="hero-cta">
+                    <a href="#contacto" class="btn btn-primary">Agendar evaluación</a>
+                    <a href="#metodo" class="btn btn-secondary">Ver cómo funciona →</a>
+                </div>
+            </div>
+            <div style="overflow: hidden; border-radius: 8px; box-shadow: 0 12px 40px rgba(96, 117, 129, 0.15); aspect-ratio: 3/4;">
+                <img src="delfina.jpg" alt="Delfina Prieto" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </div>
+        </div>
+    </section>
+
+    <!-- PILARES -->
+    <section id="pilares">
+        <p class="section-tag">LO QUE OBTENDRÁS</p>
+        <h2 class="section-title">LOS 4 PILARES DE TU TRANSFORMACIÓN</h2>
+        <p class="section-intro">Cada decisión nutricional que tomemos juntas estará guiada por estos cuatro ejes fundamentales para tu éxito.</p>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <div class="pillar-num">01</div>
+                <div class="pillar-title">Autoridad Científica</div>
+                <div class="pillar-desc">Decisiones basadas en datos reales: análisis de bioimpedancia ISAK, seguimiento de macros, y protocolos con evidencia científica. Nada de supuestos.</div>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-num">02</div>
+                <div class="pillar-title">Alto Rendimiento Estético</div>
+                <div class="pillar-desc">Tu objetivo: máxima composición corporal. No se trata de perder peso, sino de ganar calidad muscular y definir líneas con precisión.</div>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-num">03</div>
+                <div class="pillar-title">Humanidad en el Proceso</div>
+                <div class="pillar-desc">Planes flexibles, adaptados a tu vida real. Tu profesión, tu agenda, tus preferencias de alimentos. La rigidez no genera adherencia.</div>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-num">04</div>
+                <div class="pillar-title">Transparencia Total</div>
+                <div class="pillar-desc">Ves todos tus números. Cada semana recibís un reporte claro: qué cambió, por qué, y qué ajustaremos. Sin sorpresas.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MÉTODO FORM -->
+    <section id="metodo">
+        <p class="section-tag">PROCESO COMPROBADO</p>
+        <h2 class="section-title">EL MÉTODO F.O.R.M</h2>
+        <p class="section-intro">Un protocolo científico basado en 4 pilares para optimizar tu composición corporal. Cada letra representa un paso fundamental en tu transformación.</p>
+        
+        <div class="metodo-header">
+            <h3>QUÉ SIGNIFICA F.O.R.M</h3>
+            <p>Un acrónimo que resume el proceso de transformación: diagnóstico personalizado, mejora continua, resultados medibles y monitoreo completo. Así garantizamos adherencia y éxito.</p>
+        </div>
+
+        <div class="phases-grid">
+            <div class="phase-card">
+                <div class="phase-num">F</div>
+                <div class="phase-title">FASE INICIAL</div>
+                <div class="phase-desc">Diagnóstico y Baselines (Semanas 1–4)</div>
+                <p class="phase-desc" style="font-size: 13px; color: var(--slate); margin: 0;">Realizamos un análisis profundo de tu composición corporal con bioimpedancia ISAK, evaluamos tu metabolismo basal, y diseñamos un plan 100% personalizado a tu contexto.</p>
+                <ul class="phase-benefits">
+                    <li>Análisis ISAK de composición corporal</li>
+                    <li>Evaluación metabólica individualizada</li>
+                    <li>Cálculo preciso de macronutrientes</li>
+                    <li>Plan de alimentación adaptado</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-num">O</div>
+                <div class="phase-title">OPTIMIZACIÓN CONTINUA</div>
+                <div class="phase-desc">Ajuste Dinámico (Semanas 5–12)</div>
+                <p class="phase-desc" style="font-size: 13px; color: var(--slate); margin: 0;">Monitoreo semanal de tu progreso. Analizamos qué funciona, qué ajustamos, y optimizamos macros según tu respuesta real. Soporte directo para resolver barreras.</p>
+                <ul class="phase-benefits">
+                    <li>Reportes detallados cada semana</li>
+                    <li>Ajustes de macros en tiempo real</li>
+                    <li>Consultas ilimitadas de soporte</li>
+                    <li>Resolución de obstáculos específicos</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-num">R</div>
+                <div class="phase-title">RESULTADOS VISIBLES</div>
+                <div class="phase-desc">Transformación Medible (Semana 12+)</div>
+                <p class="phase-desc" style="font-size: 13px; color: var(--slate); margin: 0;">Ves los cambios no solo en la balanza, sino en datos: % grasa, masa magra ganada, circunferencias. Cada cifra comprueba que el protocolo funciona en tu cuerpo.</p>
+                <ul class="phase-benefits">
+                    <li>Nueva evaluación ISAK completa</li>
+                    <li>Comparativa visual de progreso</li>
+                    <li>Fotos antes/después documentadas</li>
+                    <li>Reporte final de transformación</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-num">M</div>
+                <div class="phase-title">MEDICIÓN PERMANENTE</div>
+                <div class="phase-desc">Sostenimiento a Largo Plazo (Semana 13+)</div>
+                <p class="phase-desc" style="font-size: 13px; color: var(--slate); margin: 0;">No es dieta, es estilo de vida. Plan flexible de mantenimiento con evaluaciones mensuales, ajustes según estación, y acceso continuo a soporte nutricional.</p>
+                <ul class="phase-benefits">
+                    <li>Plan flexible sin privación</li>
+                    <li>Check-ins mensuales de progreso</li>
+                    <li>Ajustes según cambios en tu vida</li>
+                    <li>Acceso de por vida a actualizaciones</li>
+                </ul>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- CONTACTO --> 
+    <section id="contacto">
+        <p class="section-tag">PRÓXIMO PASO</p>
+        <h2 class="section-title">INICIEMOS TU TRANSFORMACIÓN</h2>
+        <p class="section-intro">Agendar tu evaluación inicial es el primer paso. En 30 minutos recibís un análisis completo de tu situación actual y vemos si somos buena pareja.</p>
+        
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Contacta Directamente</h3>
+                <p>Preferentemente por WhatsApp para agendar con rapidez, o usa el formulario para una consulta más detallada.</p>
+                <ul class="contact-details">
+                    <li><strong>WhatsApp:</strong> <a href="https://wa.me/5493412278550" target="_blank">+54 9 341 227 8550</a></li>
+                    <li><strong>Email:</strong> <a href="mailto:licdelfinaprieto@gmail.com">licdelfinaprieto@gmail.com</a></li>
+                    <li><strong>Instagram:</strong> <a href="https://instagram.com/dp.nutri" target="_blank">@dp.nutri</a></li>
+                </ul>
+                <a href="https://wa.me/5493412278550" target="_blank" class="btn btn-primary">Enviar WhatsApp</a>
+            </div>
+
+            <div class="contact-form">
+                <h3 style="font-family: 'Bebas Neue', cursive; font-size: 24px; letter-spacing: 1.5px; margin-bottom: 12px; color: var(--slate2);">Formulario de Consulta</h3>
+                <form action="mailto:licdelfinaprieto@gmail.com" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" name="Nombre" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="Email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Teléfono (opcional)</label>
+                        <input type="tel" name="Telefono" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mensaje</label>
+                        <textarea name="Mensaje" class="form-textarea"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE DELFINA -->
+    <section style="padding: 80px 40px;">
+        <p class="section-tag">QUIÉN SOY</p>
+        <h2 class="section-title">SOBRE DELFINA</h2>
+        <div class="bio-section">
+            <p class="bio-label">Bio Oficial Instagram</p>
+            <div class="bio-lines">
+                <div class="bio-line"><strong>Lic. en Nutrición</strong> · Antropometrista ISAK II</div>
+                <div class="bio-line">Especializada en <strong>Alto Rendimiento Estético</strong></div>
+                <div class="bio-line"><strong>Método F.O.R.M:</strong> Fase → Optimización → Resultado → Medición</div>
+                <div class="bio-line">📍 Rosario · 🌐 Online</div>
+                <div class="bio-line">→ <strong>Evaluación inicial</strong> en enlace</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-brand">DP<span>.</span>NUTRI</div>
+        <ul class="footer-links">
+            <li><a href="https://dpnutri.mitiendanube.com/" target="_blank">Tienda</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="privacy.html">Política de Privacidad</a></li>
+            <li><a href="terms.html">Términos</a></li>
+        </ul>
+    </footer>
+
+    <script async src="//www.instagram.com/embed.js"></script>
+
+</body>
+</html>

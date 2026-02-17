@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Tono de Marca — DP.Nutri</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  /* ── MUTED PASTELS PALETTE ── */
+  :root {
+    --cream:    #FAFAF8;   /* bg principal          */
+    --cream2:   #DEDACF;   /* superficies / cards   */
+    --sand:     #BBBBA6;   /* bordes, muted text    */
+    --blush:    #F2E2D7;   /* highlight suave       */
+    --sage:     #C2D3CC;   /* sección alternada     */
+    --teal:     #7AB5BD;   /* acento frío / links   */
+    --terra:    #C38774;   /* acento cálido / CTA   */
+    --slate:    #607581;   /* texto principal oscuro*/
+    --slate2:   #4A5A65;   /* texto fuerte          */
+    --danger:   #A0413A;   /* error / evitar        */
+    --danger2:  #F7EEEC;   /* fondo error           */
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--slate);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,250,248,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo { font-family:'Bebas Neue',cursive; font-size:20px; letter-spacing:4px; color:var(--slate2); }
+  .nav-logo span { color:var(--terra); }
+  .nav-links { display:flex; gap:28px; list-style:none; }
+  .nav-links a { color:var(--sand); text-decoration:none; font-size:10px; letter-spacing:2px; text-transform:uppercase; font-family:'DM Mono',monospace; transition:color .2s; }
+  .nav-links a:hover { color:var(--terra); }
+
+  /* ── HERO ── */
+  .hero { padding:96px 40px 80px; max-width:1100px; margin:0 auto; position:relative; }
+  .hero::after {
+    content:'';
+    position:absolute; top:60px; right:40px;
+    width:320px; height:320px;
+    background: radial-gradient(circle, rgba(195,135,116,.12) 0%, transparent 70%);
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .hero-label { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--terra); margin-bottom:24px; opacity:0; animation:fadeUp .6s forwards .1s; }
+  .hero h1 { font-family:'Bebas Neue',cursive; font-size:clamp(64px,10vw,128px); line-height:.92; letter-spacing:2px; color:var(--slate2); opacity:0; animation:fadeUp .7s forwards .2s; }
+  .hero h1 span { color:var(--terra); }
+  .hero-sub { margin-top:32px; max-width:540px; color:var(--slate); font-size:15px; line-height:1.75; opacity:0; animation:fadeUp .7s forwards .4s; }
+  .hero-meta { margin-top:48px; display:flex; width:fit-content; border:1px solid var(--sand); background:var(--cream2); opacity:0; animation:fadeUp .7s forwards .5s; }
+  .hero-meta-item { padding:18px 28px; border-right:1px solid var(--sand); }
+  .hero-meta-item:last-child { border-right:none; }
+  .hero-meta-item label { display:block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--sand); margin-bottom:4px; }
+  .hero-meta-item span { font-size:13px; color:var(--slate2); font-weight:500; }
+
+  /* ── SECTIONS ── */
+  section { max-width:1100px; margin:0 auto; padding:80px 40px; border-top:1px solid var(--sand); opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  section.visible { opacity:1; transform:translateY(0); }
+  .section-tag { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--terra); margin-bottom:12px; }
+  .section-title { font-family:'Bebas Neue',cursive; font-size:clamp(34px,4.5vw,52px); letter-spacing:1.5px; margin-bottom:16px; line-height:1; color:var(--slate2); }
+  .section-intro { color:var(--slate); font-size:14px; margin-bottom:36px; max-width:600px; line-height:1.7; }
+
+  /* ── PILLARS ── */
+  .pillars-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:1px; background:var(--sand); border:1px solid var(--sand); }
+  .pillar-card { background:var(--cream2); padding:32px 28px; position:relative; transition:background .25s; overflow:hidden; cursor:default; }
+  .pillar-card::after { content:''; position:absolute; top:0; left:0; height:3px; width:0; background:var(--terra); transition:width .35s ease; }
+  .pillar-card:hover { background:var(--blush); }
+  .pillar-card:hover::after { width:100%; }
+  .pillar-num { font-family:'Bebas Neue',cursive; font-size:44px; color:var(--sand); line-height:1; margin-bottom:12px; transition:color .3s; }
+  .pillar-card:hover .pillar-num { color:var(--terra); }
+  .pillar-title { font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; color:var(--slate2); }
+  .pillar-desc { font-size:13px; color:var(--slate); line-height:1.6; }
+
+  /* ── MÉTODO DP ── */
+  .metodo-intro { background:var(--slate2); padding:32px 40px; }
+  .metodo-intro h3 { font-family:'Bebas Neue',cursive; font-size:32px; letter-spacing:2px; color:var(--cream); margin-bottom:6px; }
+  .metodo-intro p { color:var(--sage); font-size:13px; max-width:560px; }
+  .metodo-names-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--sand); border:1px solid var(--sand); border-top:none; }
+  .metodo-name-card { background:var(--cream2); padding:24px 18px; cursor:pointer; transition:background .2s; position:relative; }
+  .metodo-name-card:hover { background:var(--blush); }
+  .metodo-name-card.selected { background:var(--blush); }
+  .metodo-name-card.selected::after { content:'✓'; position:absolute; top:12px; right:14px; font-size:14px; color:var(--terra); font-weight:700; }
+  .name-num { font-family:'DM Mono',monospace; font-size:9px; color:var(--sand); letter-spacing:2px; margin-bottom:8px; }
+  .name-title { font-family:'Bebas Neue',cursive; font-size:26px; letter-spacing:1.5px; color:var(--slate2); margin-bottom:8px; line-height:1.1; }
+  .metodo-name-card.selected .name-title { color:var(--terra); }
+  .name-concept { font-size:12px; color:var(--slate); line-height:1.5; }
+  .metodo-phases { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--sand); border:1px solid var(--sand); border-top:none; }
+  .phase-card { background:var(--sage); padding:28px; }
+  .phase-num { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--slate2); margin-bottom:10px; }
+  .phase-title { font-size:15px; font-weight:600; margin-bottom:8px; color:var(--slate2); }
+  .phase-desc { font-size:13px; color:var(--slate); line-height:1.6; }
+
+  /* ── TONE SLIDERS ── */
+  .tone-sliders { display:grid; gap:28px; }
+  .tone-row { display:grid; grid-template-columns:150px 1fr 170px; align-items:center; gap:20px; }
+  .tone-label-left { text-align:right; font-size:11px; color:var(--sand); font-family:'DM Mono',monospace; line-height:1.4; }
+  .tone-label-right { font-size:11px; color:var(--terra); font-family:'DM Mono',monospace; font-weight:500; line-height:1.4; }
+  .tone-track { height:4px; background:var(--sand); border-radius:2px; position:relative; cursor:pointer; }
+  .tone-fill { height:100%; background:linear-gradient(to right, var(--sand), var(--terra)); border-radius:2px; transition:width .25s ease; }
+  .tone-thumb { position:absolute; top:50%; transform:translate(-50%,-50%); width:14px; height:14px; background:var(--terra); border-radius:50%; border:2px solid var(--cream); box-shadow:0 1px 6px rgba(195,135,116,.4); transition:left .25s ease; }
+  input[type="range"] { position:absolute; inset:-8px 0; opacity:0; cursor:pointer; width:100%; }
+
+  /* ── VOICE TABLE ── */
+  .voice-table { width:100%; border-collapse:collapse; border:1px solid var(--sand); margin-top:40px; }
+  .voice-table th { padding:14px 20px; text-align:left; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; border-bottom:1px solid var(--sand); }
+  .voice-table th.before { color:var(--danger); background:var(--danger2); }
+  .voice-table th.after  { color:var(--slate2); background:var(--sage); }
+  .voice-table td { padding:15px 20px; font-size:14px; vertical-align:top; border-top:1px solid var(--sand); }
+  .voice-table td.before { color:var(--sand); font-style:italic; background:var(--danger2); }
+  .voice-table td.after  { color:var(--slate2); background:var(--cream2); }
+
+  /* ── VOCABULARY ── */
+  .vocab-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--sand); border:1px solid var(--sand); }
+  .vocab-col { background:var(--cream2); padding:32px; }
+  .vocab-col h3 { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; margin-bottom:24px; }
+  .vocab-col.avoid h3 { color:var(--danger); }
+  .vocab-col.use h3   { color:var(--terra); }
+  .vocab-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .tag { padding:6px 12px; border-radius:3px; font-size:12px; font-family:'DM Mono',monospace; cursor:default; transition:transform .15s; }
+  .tag:hover { transform:scale(1.04); }
+  .vocab-col.avoid .tag { background:var(--danger2); color:var(--danger); text-decoration:line-through; text-decoration-color:var(--danger); border:1px solid #e8c0bc; }
+  .vocab-col.use .tag   { background:var(--blush); color:var(--slate2); border:1px solid var(--terra); }
+
+  /* ── BIO ── */
+  .bio-box { background:var(--cream2); border:1px solid var(--sand); padding:40px; position:relative; }
+  .bio-box::before { content:'MODELO BIO — INSTAGRAM'; position:absolute; top:18px; right:24px; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; color:var(--sand); }
+  .bio-lines { font-size:17px; line-height:2.1; font-weight:300; color:var(--slate2); }
+  .bio-line { display:block; padding:2px 0 2px 12px; border-left:2px solid transparent; transition:border-color .2s, background .2s; cursor:default; border-radius:2px; }
+  .bio-line:hover { border-color:var(--terra); background:var(--blush); }
+  .bio-line strong { font-weight:600; color:var(--slate2); }
+  .bio-annotation { margin-top:32px; display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1px; background:var(--sand); border:1px solid var(--sand); }
+  .bio-note { padding:16px 18px; background:var(--sage); }
+  .bio-note label { display:block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; color:var(--slate2); margin-bottom:6px; text-transform:uppercase; }
+  .bio-note p { font-size:12px; color:var(--slate); line-height:1.5; }
+
+  /* ── CTAs ── */
+  .cta-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--sand); border:1px solid var(--sand); }
+  .cta-card { background:var(--cream2); padding:32px; }
+  .cta-card h3 { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+  .cta-card.old h3 { color:var(--danger); }
+  .cta-card.new h3 { color:var(--terra); }
+  .cta-example { font-size:17px; line-height:1.55; margin-bottom:12px; }
+  .cta-card.old .cta-example { color:var(--sand); font-style:italic; }
+  .cta-card.new .cta-example { color:var(--slate2); }
+  .cta-why { font-size:11px; color:var(--sand); font-family:'DM Mono',monospace; border-top:1px solid var(--sand); padding-top:14px; margin-top:14px; line-height:1.6; }
+
+  /* ── CANALES ── */
+  .channels-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--sand); border:1px solid var(--sand); }
+  .channel-card { background:var(--cream2); padding:28px 24px; }
+  .channel-head { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .channel-icon { width:36px; height:36px; background:var(--sage); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+  .channel-name { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--slate2); }
+  .channel-tone { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:1.5px; color:var(--terra); margin-top:2px; }
+  .channel-rule { font-size:12px; color:var(--slate); padding:8px 0; border-top:1px solid var(--sand); line-height:1.55; }
+
+  /* ── ERRORES ── */
+  .errors-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1px; background:var(--sand); border:1px solid var(--sand); }
+  .error-card { background:var(--cream2); padding:24px; border-top:3px solid transparent; transition:background .2s, border-color .2s; }
+  .error-card:hover { background:var(--danger2); border-top-color:var(--danger); }
+  .error-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; color:var(--danger); text-transform:uppercase; margin-bottom:10px; }
+  .error-title { font-size:14px; font-weight:600; color:var(--slate2); margin-bottom:8px; }
+  .error-desc  { font-size:12px; color:var(--slate); line-height:1.6; }
+
+  /* ── PALETA ── */
+  .palette-header { background:var(--slate2); padding:32px 40px; border:1px solid var(--slate2); }
+  .palette-header h3 { font-family:'Bebas Neue',cursive; font-size:32px; letter-spacing:2px; color:var(--cream); margin-bottom:6px; }
+  .palette-header p { color:var(--sage); font-size:13px; max-width:580px; line-height:1.7; }
+  .palette-grid-8 { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--sand); border:1px solid var(--sand); border-top:none; }
+  .palette-card { background:var(--cream2); overflow:hidden; cursor:default; transition:transform .15s, box-shadow .15s; }
+  .palette-card:hover { transform:scale(1.025); z-index:2; box-shadow:0 6px 24px rgba(96,117,129,.15); }
+  .palette-swatch { height:90px; width:100%; }
+  .palette-info { padding:14px 16px; }
+  .palette-hex { font-family:'DM Mono',monospace; font-size:12px; color:var(--slate2); font-weight:500; margin-bottom:3px; }
+  .palette-role { font-size:10px; color:var(--sand); letter-spacing:.5px; margin-bottom:6px; text-transform:uppercase; font-family:'DM Mono',monospace; }
+  .palette-use { font-size:11px; color:var(--slate); line-height:1.5; border-top:1px solid var(--sand); padding-top:8px; }
+  .palette-combos { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--sand); border:1px solid var(--sand); border-top:none; }
+  .combo-card { padding:28px 32px; display:flex; align-items:center; justify-content:space-between; }
+  .combo-label-txt { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
+  .combo-preview-txt { font-family:'Bebas Neue',cursive; font-size:24px; letter-spacing:1px; }
+  .palette-usage { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--sand); border:1px solid var(--sand); border-top:none; }
+  .usage-card { padding:24px; background:var(--cream2); }
+  .usage-title { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--slate2); margin-bottom:10px; }
+  .usage-swatches { display:flex; gap:6px; margin-bottom:10px; }
+  .mini-dot { width:26px; height:26px; border-radius:50%; border:1px solid var(--sand); flex-shrink:0; }
+  .usage-desc { font-size:12px; color:var(--slate); line-height:1.6; }
+
+  /* ── CHECKLIST ── */
+  .progress-label { font-family:'DM Mono',monospace; font-size:11px; color:var(--sand); margin-bottom:8px; }
+  .progress-bar-wrap { background:var(--sand); height:3px; margin-bottom:24px; border-radius:2px; overflow:hidden; }
+  .progress-bar-fill { height:100%; background:var(--terra); border-radius:2px; transition:width .4s ease; width:0%; }
+  .checklist { display:grid; gap:1px; background:var(--sand); border:1px solid var(--sand); }
+  .check-item { display:grid; grid-template-columns:56px 1fr auto; align-items:stretch; background:var(--cream2); cursor:pointer; transition:background .15s; user-select:none; }
+  .check-item:hover { background:var(--blush); }
+  .check-box-wrap { display:flex; align-items:center; justify-content:center; border-right:1px solid var(--sand); padding:20px 0; }
+  .check-box { width:20px; height:20px; border:1.5px solid var(--sand); border-radius:3px; display:flex; align-items:center; justify-content:center; transition:all .2s; flex-shrink:0; }
+  .check-item.done .check-box { background:var(--terra); border-color:var(--terra); }
+  .check-icon { opacity:0; transition:opacity .2s; font-size:11px; color:var(--cream); }
+  .check-item.done .check-icon { opacity:1; }
+  .check-text { font-size:13px; color:var(--slate2); padding:18px 20px; line-height:1.5; display:flex; align-items:center; }
+  .check-item.done .check-text { color:var(--sand); text-decoration:line-through; }
+  .check-category { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; color:var(--sand); text-transform:uppercase; white-space:nowrap; padding:18px 20px; border-left:1px solid var(--sand); display:flex; align-items:center; }
+
+  /* ── FOOTER ── */
+  footer { border-top:1px solid var(--sand); max-width:1100px; margin:0 auto; padding:48px 40px; display:flex; justify-content:space-between; align-items:center; }
+  .footer-brand { font-family:'Bebas Neue',cursive; font-size:24px; letter-spacing:4px; color:var(--slate2); }
+  .footer-brand span { color:var(--terra); }
+  .footer-meta { font-family:'DM Mono',monospace; font-size:10px; color:var(--sand); text-align:right; line-height:1.9; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media(max-width:720px){
+    nav{padding:0 20px;}
+    .nav-links{display:none;}
+    .hero{padding:60px 20px;}
+    section{padding:56px 20px;}
+    .tone-row{grid-template-columns:70px 1fr 90px;gap:10px;}
+    .tone-label-left,.tone-label-right{font-size:9px;}
+    .vocab-grid,.cta-grid,.channels-grid,.metodo-names-grid,.metodo-phases,.palette-combos,.palette-usage,.palette-grid-8{grid-template-columns:1fr;}
+    .bio-annotation{grid-template-columns:1fr 1fr;}
+    .hero-meta{flex-direction:column;width:100%;}
+    .hero-meta-item{border-right:none;border-bottom:1px solid var(--sand);}
+    .hero-meta-item:last-child{border-bottom:none;}
+    footer{flex-direction:column;gap:24px;text-align:center;}
+    .footer-meta{text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">DP<span>.</span>NUTRI</div>
+  <ul class="nav-links">
+    <li><a href="#pilares">Pilares</a></li>
+    <li><a href="#metodo">Método DP</a></li>
+    <li><a href="#voz">Voz</a></li>
+    <li><a href="#vocabulario">Vocabulario</a></li>
+    <li><a href="#bio">Bio & CTAs</a></li>
+    <li><a href="#canales">Canales</a></li>
+    <li><a href="#errores">Errores</a></li>
+    <li><a href="#paleta">Paleta</a></li>
+    <li><a href="#checklist">Checklist</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-label">GUÍA DE TONO DE MARCA · VERSIÓN 2.0</p>
+  <h1>DEL<span>FINA</span><br>PRIETO</h1>
+  <p class="hero-sub">Una guía de posicionamiento estratégico para consolidar la presencia de Delfina Prieto como referente de nutrición de alto rendimiento estético en Rosario y online.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><label>Marca</label><span>@dp.nutri</span></div>
+    <div class="hero-meta-item"><label>Nicho</label><span>Alto Rendimiento Estético</span></div>
+    <div class="hero-meta-item"><label>Mercado</label><span>Rosario · Online</span></div>
+    <div class="hero-meta-item"><label>Tono Objetivo</label><span>Autoridad Científica</span></div>
+  </div>
+</div>
+
+<!-- 01 PILARES -->
+<section id="pilares">
+  <p class="section-tag">01 / IDENTIDAD DE MARCA</p>
+  <h2 class="section-title">LOS 4 PILARES</h2>
+  <p class="section-intro">Todo contenido, frase y decisión de comunicación debe anclarse en uno de estos cuatro ejes. Si no encaja en ninguno, no se publica.</p>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <div class="pillar-num">01</div>
+      <div class="pillar-title">Recomposición Corporal</div>
+      <div class="pillar-desc">Pérdida de tejido adiposo con preservación y ganancia de masa magra. Metodología basada en datos, no en intuición.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-num">02</div>
+      <div class="pillar-title">Preparación Competitiva</div>
+      <div class="pillar-desc">Peak week, volumen inteligente y periodización nutricional para atletas y competidores de culturismo y fitness.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-num">03</div>
+      <div class="pillar-title">Estrategia Nutricional</div>
+      <div class="pillar-desc">Nutrient timing, manipulación de carbohidratos, déficit agresivo controlado y macros de precisión por fase.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-num">04</div>
+      <div class="pillar-title">Evaluación Antropométrica</div>
+      <div class="pillar-desc">Protocolo ISAK II + bioimpedancia. El dato real que sustenta cada estrategia. Ciencia, no estimación visual.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 MÉTODO DP -->
+<section id="metodo">
+  <p class="section-tag">02 / PROPIEDAD INTELECTUAL</p>
+  <h2 class="section-title">EL MÉTODO DP</h2>
+  <p class="section-intro">Nombrar el método crea diferenciación real. Hacé clic en la opción que más resuena con la identidad de Delfina.</p>
+  <div class="metodo-intro">
+    <h3>5 NOMBRES CANDIDATOS</h3>
+    <p>Cada nombre tiene una lógica estratégica diferente. Seleccioná el que mejor la represente.</p>
+  </div>
+  <div class="metodo-names-grid">
+    <div class="metodo-name-card" onclick="selectName(this)">
+      <div class="name-num">OPCIÓN 01</div>
+      <div class="name-title">MÉTODO FORM</div>
+      <div class="name-concept">Fase · Optimización · Resultado · Medición. Suena a protocolo clínico. Técnico y muy estructurado.</div>
+    </div>
+    <div class="metodo-name-card" onclick="selectName(this)">
+      <div class="name-num">OPCIÓN 02</div>
+      <div class="name-title">PROTOCOLO AXIS</div>
+      <div class="name-concept">El "eje" sobre el que gira toda la estrategia corporal. Internacional, memorable, funciona en español e inglés.</div>
+    </div>
+    <div class="metodo-name-card" onclick="selectName(this)">
+      <div class="name-num">OPCIÓN 03</div>
+      <div class="name-title">SISTEMA APEX</div>
+      <div class="name-concept">El punto más alto del rendimiento. Aspiracional y científico. Ideal para posicionamiento premium.</div>
+    </div>
+    <div class="metodo-name-card" onclick="selectName(this)">
+      <div class="name-num">OPCIÓN 04</div>
+      <div class="name-title">MÉTODO CORE DP</div>
+      <div class="name-concept">"Core" como núcleo del cuerpo y de la estrategia. Directo, con la firma personal incorporada.</div>
+    </div>
+    <div class="metodo-name-card" onclick="selectName(this)">
+      <div class="name-num">OPCIÓN 05</div>
+      <div class="name-title">PROTOCOLO STRATA</div>
+      <div class="name-concept">De "estratificación". Hace referencia a las fases/capas del proceso. Sofisticado y único en el nicho.</div>
+    </div>
+  </div>
+  <div class="metodo-phases">
+    <div class="phase-card">
+      <div class="phase-num">FASE 01</div>
+      <div class="phase-title">Evaluación</div>
+      <div class="phase-desc">Antropometría ISAK II + bioimpedancia. La línea de base objetiva que sustenta cada decisión estratégica.</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">FASE 02</div>
+      <div class="phase-title">Estrategia</div>
+      <div class="phase-desc">Periodización nutricional personalizada según objetivo, fase de entrenamiento y composición corporal actual.</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">FASE 03</div>
+      <div class="phase-title">Optimización</div>
+      <div class="phase-desc">Ajuste continuo basado en métricas reales. No intuición — protocolo. Datos que sostienen cada decisión.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 VOZ Y TONO -->
+<section id="voz">
+  <p class="section-tag">03 / COMUNICACIÓN</p>
+  <h2 class="section-title">CALIBRADOR DE VOZ</h2>
+  <p class="section-intro">Los sliders muestran dónde debe posicionarse el tono de Delfina. Las marcas actuales son el objetivo.</p>
+  <div class="tone-sliders">
+    <div class="tone-row">
+      <span class="tone-label-left">Empática / Acompañante</span>
+      <div class="tone-track"><div class="tone-fill" id="fill-1" style="width:75%"></div><div class="tone-thumb" id="thumb-1" style="left:75%"></div><input type="range" min="0" max="100" value="75" oninput="updateSlider(1,this.value)"></div>
+      <span class="tone-label-right">Estratégica / Directiva</span>
+    </div>
+    <div class="tone-row">
+      <span class="tone-label-left">Accesible / General</span>
+      <div class="tone-track"><div class="tone-fill" id="fill-2" style="width:80%"></div><div class="tone-thumb" id="thumb-2" style="left:80%"></div><input type="range" min="0" max="100" value="80" oninput="updateSlider(2,this.value)"></div>
+      <span class="tone-label-right">Técnica / Especializada</span>
+    </div>
+    <div class="tone-row">
+      <span class="tone-label-left">Motivacional</span>
+      <div class="tone-track"><div class="tone-fill" id="fill-3" style="width:25%"></div><div class="tone-thumb" id="thumb-3" style="left:25%"></div><input type="range" min="0" max="100" value="25" oninput="updateSlider(3,this.value)"></div>
+      <span class="tone-label-right">Basada en evidencia</span>
+    </div>
+    <div class="tone-row">
+      <span class="tone-label-left">Cálida / Cercana</span>
+      <div class="tone-track"><div class="tone-fill" id="fill-4" style="width:35%"></div><div class="tone-thumb" id="thumb-4" style="left:35%"></div><input type="range" min="0" max="100" value="35" oninput="updateSlider(4,this.value)"></div>
+      <span class="tone-label-right">Profesional / Rigurosa</span>
+    </div>
+  </div>
+  <table class="voice-table">
+    <thead>
+      <tr>
+        <th class="before">✗ EVITAR — Tono actual</th>
+        <th class="after">✓ USAR — Tono objetivo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="before">"Te ayudo a mejorar tus hábitos alimenticios"</td><td class="after">"Diseño estrategias nutricionales basadas en evaluación y datos reales."</td></tr>
+      <tr><td class="before">"Comé más saludable"</td><td class="after">"Optimizá la distribución de macros según tu fase de entrenamiento."</td></tr>
+      <tr><td class="before">"Te acompaño en tu proceso"</td><td class="after">"Trabajo con atletas que buscan recomposición real, no promesas genéricas."</td></tr>
+      <tr><td class="before">"Bajar de peso"</td><td class="after">"Reducción de tejido adiposo con preservación de masa magra."</td></tr>
+      <tr><td class="before">"Hago planes personalizados"</td><td class="after">"Diseño periodización nutricional en 3 fases según composición corporal inicial."</td></tr>
+      <tr><td class="before">"Comer bien"</td><td class="after">"Nutrient timing y periodización calórica aplicada al entrenamiento."</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 04 VOCABULARIO -->
+<section id="vocabulario">
+  <p class="section-tag">04 / LENGUAJE</p>
+  <h2 class="section-title">VOCABULARIO DE NICHO</h2>
+  <p class="section-intro">El lenguaje técnico no es exclusión — es filtro. Atrae a quien sabe y educa a quien quiere saber.</p>
+  <div class="vocab-grid">
+    <div class="vocab-col avoid">
+      <h3>✗ ELIMINAR</h3>
+      <div class="vocab-tags">
+        <span class="tag">Saludable</span><span class="tag">Hábitos</span><span class="tag">Bienestar</span>
+        <span class="tag">Bajar de peso</span><span class="tag">Comer bien</span><span class="tag">Tips</span>
+        <span class="tag">Recetas</span><span class="tag">Acompañarte</span><span class="tag">Plan personalizado</span>
+        <span class="tag">Estilo de vida</span><span class="tag">Dieta</span><span class="tag">Turnos al DM</span>
+      </div>
+    </div>
+    <div class="vocab-col use">
+      <h3>✓ INCORPORAR</h3>
+      <div class="vocab-tags">
+        <span class="tag">Composición corporal</span><span class="tag">Hipertrofia</span>
+        <span class="tag">Puesta a punto</span><span class="tag">Nutrient timing</span>
+        <span class="tag">Déficit agresivo controlado</span><span class="tag">Peak week</span>
+        <span class="tag">Macros precisos</span><span class="tag">Periodización</span>
+        <span class="tag">Recomposición</span><span class="tag">ISAK II</span>
+        <span class="tag">Masa magra</span><span class="tag">Tejido adiposo</span>
+        <span class="tag">Bioimpedancia</span><span class="tag">Asesoría de rendimiento</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 BIO & CTAs -->
+<section id="bio">
+  <p class="section-tag">05 / IDENTIDAD DIGITAL</p>
+  <h2 class="section-title">MODELO DE BIO</h2>
+  <p class="section-intro">Cada línea tiene una función estratégica. Pasá el cursor sobre cada una para ver su rol.</p>
+  <div class="bio-box">
+    <div class="bio-lines">
+      <span class="bio-line"><strong>Nutrición estratégica para recomposición corporal</strong></span>
+      <span class="bio-line">Alto rendimiento estético</span>
+      <span class="bio-line">Lic. en Nutrición · Antropometría ISAK II</span>
+      <span class="bio-line">Rosario · Online</span>
+      <span class="bio-line" style="font-size:14px;color:var(--slate);margin-top:6px;display:block;">↓ Evaluación de composición corporal disponible</span>
+    </div>
+    <div class="bio-annotation">
+      <div class="bio-note"><label>Línea 1 — Posicionamiento</label><p>El nicho exacto en 5 palabras. Sin ambigüedad. El visitante sabe en 3 segundos si llegó al lugar correcto.</p></div>
+      <div class="bio-note"><label>Línea 2 — Diferenciador</label><p>Separa de cualquier nutricionista generalista. Habla directamente a deportistas y atletas.</p></div>
+      <div class="bio-note"><label>Línea 3 — Credencial</label><p>ISAK II es lenguaje de atletas. Legitima el enfoque técnico ante el público que más importa.</p></div>
+      <div class="bio-note"><label>Línea 4 — Alcance</label><p>Rosario para anclar en lo local. Online para escalar sin límite geográfico.</p></div>
+      <div class="bio-note"><label>CTA — Exclusividad</label><p>"Disponible" sugiere cupos limitados. Cambia la percepción: de acceso total a acceso selectivo.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Bebas Neue',cursive;font-size:36px;letter-spacing:1.5px;margin-top:56px;margin-bottom:16px;color:var(--slate2);">CALLS TO ACTION</h3>
+  <p class="section-intro" style="margin-top:0;">El CTA define la psicología de la transacción: de "pedir turno" a "ser seleccionado".</p>
+  <div class="cta-grid">
+    <div class="cta-card old">
+      <h3>✗ CTA PASIVO — TONO ACTUAL</h3>
+      <p class="cta-example">"Turnos al DM"</p>
+      <p class="cta-example">"Hablame para más info"</p>
+      <p class="cta-example">"Pedí tu turno"</p>
+      <p class="cta-why">Pone el poder en el cliente. La percepción implícita: disponibilidad total = bajo valor percibido.</p>
+    </div>
+    <div class="cta-card new">
+      <h3>✓ CTA DE AUTORIDAD — OBJETIVO</h3>
+      <p class="cta-example">"Aplicá para tu asesoría de rendimiento"</p>
+      <p class="cta-example">"Evaluación de composición corporal — plazas limitadas"</p>
+      <p class="cta-example">"¿Cumplís el perfil? Conocé el Método DP"</p>
+      <p class="cta-why">Pone el poder en Delfina. El cliente "aplica", no "pide". Filtra, eleva el valor percibido y genera urgencia real.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 CANALES -->
+<section id="canales">
+  <p class="section-tag">06 / ESTRATEGIA DE CANALES</p>
+  <h2 class="section-title">TONO POR CANAL</h2>
+  <p class="section-intro">Cada canal tiene un registro distinto. Usar el mismo tono en todos diluye la marca y confunde a la audiencia.</p>
+  <div class="channels-grid">
+    <div class="channel-card">
+      <div class="channel-head"><div class="channel-icon">📸</div><div><div class="channel-name">Instagram Feed</div><div class="channel-tone">AUTORIDAD TÉCNICA</div></div></div>
+      <div class="channel-rule">Contenido de largo plazo. Carruseles de ciencia, datos de pacientes, pilares del método. Lenguaje técnico controlado.</div>
+      <div class="channel-rule">Evitar posts motivacionales genéricos y frases inspiradoras sin sustento científico.</div>
+      <div class="channel-rule">Frecuencia: 3–4 posts por semana con pilares rotativos y estética consistente.</div>
+    </div>
+    <div class="channel-card">
+      <div class="channel-head"><div class="channel-icon">⚡</div><div><div class="channel-name">Instagram Stories</div><div class="channel-tone">CERCANÍA CONTROLADA</div></div></div>
+      <div class="channel-rule">Más personal, pero nunca informal en exceso. Mostrar el consultorio, el proceso, los scans.</div>
+      <div class="channel-rule">Canal de humanización: el "yo" de Delfina, preguntas interactivas, casos en proceso (con permiso).</div>
+      <div class="channel-rule">Ideal para CTAs de urgencia: "Quedan 2 plazas esta semana para evaluación."</div>
+    </div>
+    <div class="channel-card">
+      <div class="channel-head"><div class="channel-icon">💬</div><div><div class="channel-name">WhatsApp</div><div class="channel-tone">CONVERSIÓN DIRECTA</div></div></div>
+      <div class="channel-rule">No es canal de contenido. Es el cierre. Tono profesional, respuestas breves y orientadas a la acción.</div>
+      <div class="channel-rule">Mensaje sugerido: "Para iniciar una asesoría de rendimiento, completá el formulario previo a la evaluación: [link]."</div>
+      <div class="channel-rule">Nunca: "Hola! Contame qué necesitás 😊" — destruye en segundos la autoridad construida en el feed.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 ERRORES -->
+<section id="errores">
+  <p class="section-tag">07 / ALERTAS DE MARCA</p>
+  <h2 class="section-title">ERRORES QUE DILUYEN LA AUTORIDAD</h2>
+  <p class="section-intro">Específicos del nicho fitness-nutrición. Cada uno de estos erosiona silenciosamente el posicionamiento premium.</p>
+  <div class="errors-grid">
+    <div class="error-card"><div class="error-label">ERROR 01</div><div class="error-title">Mezclar públicos en el mismo contenido</div><div class="error-desc">Un post para principiantes y otro para atletas de competencia en el mismo feed envían señales contradictorias. El nicho percibe que no hay especialización real.</div></div>
+    <div class="error-card"><div class="error-label">ERROR 02</div><div class="error-title">Usar fotos de platos con estética lifestyle</div><div class="error-desc">Luz natural suave y colores pasteles comunican "nutrición general". La estética debe ser laboratorio: consultorio, balanza, scanner, datos reales.</div></div>
+    <div class="error-card"><div class="error-label">ERROR 03</div><div class="error-title">Mostrar transformaciones solo visualmente</div><div class="error-desc">El antes/después fotográfico es genérico. El atleta quiere datos: % grasa inicial, masa magra final, semanas de protocolo. Los números diferencian del 90% del mercado.</div></div>
+    <div class="error-card"><div class="error-label">ERROR 04</div><div class="error-title">Tono informal en el primer contacto privado</div><div class="error-desc">Si el feed construye autoridad técnica y el DM dice "Holiii 🥰", se destruye toda la percepción en segundos. El primer contacto debe sostener el posicionamiento.</div></div>
+    <div class="error-card"><div class="error-label">ERROR 05</div><div class="error-title">Publicar contenido básico "para no dejar de postear"</div><div class="error-desc">"Tomá agua", "dormí 8 horas". En un perfil premium esto baja el nivel percibido. Silencio estratégico es mejor que contenido de relleno.</div></div>
+    <div class="error-card"><div class="error-label">ERROR 06</div><div class="error-title">No mencionar el Método DP con consistencia</div><div class="error-desc">La propiedad intelectual solo existe si se comunica repetidamente. "Hago planes" y "Aplico el Método APEX" no generan el mismo posicionamiento mental.</div></div>
+  </div>
+</section>
+
+<!-- 08 PALETA -->
+<section id="paleta">
+  <p class="section-tag">08 / IDENTIDAD VISUAL — SUGERENCIA</p>
+  <h2 class="section-title">PALETA MUTED PASTELS</h2>
+  <p class="section-intro">Una paleta que rompe con el estereotipo visual del nicho fitness (negro + flúo) y propone un posicionamiento premium diferente: cálido, sofisticado y con autoridad científica.</p>
+
+  <div class="palette-header">
+    <h3>LÓGICA DE LA PALETA</h3>
+    <p>Los beiges cálidos (#ECE8DD, #DEDACF) dan calidez humana. Los grises azulados (#7AB5BD, #607581) aportan rigor científico. El terracota (#C38774) como color de acción es más sofisticado que el naranja fitness y más humano que el azul corporativo frío.</p>
+  </div>
+
+  <div class="palette-grid-8">
+    <div class="palette-card">
+      <div class="palette-swatch" style="background:#FAFAF8; border-bottom:1px solid var(--sand);"></div>
+      <div class="palette-info">
+        <div class="palette-hex">#FAFAF8 <span style="font-size:10px;color:var(--sand);">adaptado</span></div>
+        <div class="palette-role">FONDO PRINCIPAL</div>
+        <div class="palette-use">Blanco roto levemente cálido. Mejor legibilidad que el crema puro, mantiene la calidez de la paleta.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="palette-swatch" style="background:#BBBBA6;"></div>
+      <div class="palette-info">
+        <div class="palette-hex">#BBBBA6</div>
+        <div class="palette-role">GRIS CÁLIDO</div>
+        <div class="palette-use">Bordes, texto secundario, separadores. Más sofisticado que el gris neutro estándar.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="palette-swatch" style="background:#DEDACF;"></div>
+      <div class="palette-info">
+        <div class="palette-hex">#DEDACF</div>
+        <div class="palette-role">SUPERFICIE / CARDS</div>
+        <div class="palette-use">Fondos de cards y secciones alternadas. Crea profundidad sin contraste agresivo.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="palette-swatch" style="background:#7AB5BD;"></div>
+      <div class="palette-info">
+        <div class="palette-hex">#7AB5BD</div>
+        <div class="palette-role">ACENTO FRÍO</div>
+        <div class="palette-use">Links, íconos, datos científicos. Transmite rigor sin frialdad excesiva.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="palette-swatch" style="background:#F2E2D7;"></div>
+      <div class="palette-info">
+        <div class="palette-hex">#F2E2D7</div>
+        <div class="palette-role">BLUSH / HIGHLIGHT</div>
+        <div class="palette-use">Hover states, secciones de énfasis suave. Femenino sin ser rosado evidente.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="palette-swatch" style="background:#C2D3CC;"></div>
+      <div class="palette-info">
+        <div class="palette-hex">#C2D3CC</div>
+        <div class="palette-role">SAGE / FASES</div>
+        <div class="palette-use">Fases del método, tablas informativas. Equilibra la calidez de los beiges con frescura.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="palette-swatch" style="background:#C38774;"></div>
+      <div class="palette-info">
+        <div class="palette-hex">#C38774</div>
+        <div class="palette-role">TERRACOTA — ÉNFASIS</div>
+        <div class="palette-use">CTAs principales, acentos de acción. El color de marca. Poderoso, humano y memorable.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="palette-swatch" style="background:#607581;"></div>
+      <div class="palette-info">
+        <div class="palette-hex">#607581</div>
+        <div class="palette-role">PIZARRA — BASE</div>
+        <div class="palette-use">Texto principal, headers, íconos oscuros. Reemplaza al negro puro: más elegante y cálido.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMBINACIONES EN VIVO -->
+  <div class="palette-combos">
+    <div class="combo-card" style="background:#FAFAF8;border:1px solid var(--sand)">
+      <div><div class="combo-label-txt" style="color:#BBBBA6;">Fondo crema + texto pizarra</div><div class="combo-preview-txt" style="color:#607581;">MÉTODO DP</div></div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:#BBBBA6;">FEED / POSTS</div>
+    </div>
+    <div class="combo-card" style="background:#607581;">
+      <div><div class="combo-label-txt" style="color:#C2D3CC;">Oscuro + crema</div><div class="combo-preview-txt" style="color:#ECE8DD;">RENDIMIENTO</div></div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:#C2D3CC;">HEADERS</div>
+    </div>
+    <div class="combo-card" style="background:#C38774;">
+      <div><div class="combo-label-txt" style="color:rgba(236,232,221,.7);">Terracota + crema</div><div class="combo-preview-txt" style="color:#ECE8DD;">APLICÁ AHORA</div></div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(236,232,221,.7);">CTAs</div>
+    </div>
+  </div>
+
+  <!-- USO POR CANAL -->
+  <div class="palette-usage">
+    <div class="usage-card">
+      <div class="usage-title">Feed de Instagram</div>
+      <div class="usage-swatches">
+        <div class="mini-dot" style="background:#FAFAF8;border:1px solid var(--sand);" title="Fondo"></div>
+        <div class="mini-dot" style="background:#607581;" title="Texto"></div>
+        <div class="mini-dot" style="background:#C38774;" title="Énfasis"></div>
+        <div class="mini-dot" style="background:#BBBBA6;" title="Secundario"></div>
+      </div>
+      <div class="usage-desc">Fondo crema + texto pizarra + terracota para énfasis. Estética "laboratorio cálido": premium sin ser intimidante, técnica sin ser fría.</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-title">Stories & Highlights</div>
+      <div class="usage-swatches">
+        <div class="mini-dot" style="background:#F2E2D7;" title="Fondo"></div>
+        <div class="mini-dot" style="background:#C2D3CC;" title="Sage"></div>
+        <div class="mini-dot" style="background:#7AB5BD;" title="Teal"></div>
+        <div class="mini-dot" style="background:#C38774;" title="CTA"></div>
+      </div>
+      <div class="usage-desc">Rosa marfil y sage para fondos. El teal como acento en íconos de highlights. Paleta reconocible al instante al navegar el perfil.</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-title">Materiales de Consulta</div>
+      <div class="usage-swatches">
+        <div class="mini-dot" style="background:#DEDACF;" title="Fondo doc"></div>
+        <div class="mini-dot" style="background:#BBBBA6;" title="Bordes"></div>
+        <div class="mini-dot" style="background:#607581;" title="Texto"></div>
+        <div class="mini-dot" style="background:#C38774;" title="Datos clave"></div>
+      </div>
+      <div class="usage-desc">Para planes de alimentación e informes ISAK. Sofisticados, imprimibles, totalmente coherentes con la marca digital.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 CHECKLIST -->
+<section id="checklist">
+  <p class="section-tag">09 / IMPLEMENTACIÓN</p>
+  <h2 class="section-title">CHECKLIST DE TRANSICIÓN</h2>
+  <p class="section-intro">15 acciones concretas para ejecutar la transición de marca. Hacé clic para marcar el progreso.</p>
+  <div class="progress-label" id="progress-text">0 de 15 acciones completadas</div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  <div class="checklist">
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Elegir el nombre del Método DP (FORM / AXIS / APEX / CORE DP / STRATA)</span><span class="check-category">Identidad</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Reescribir bio de Instagram con el modelo propuesto</span><span class="check-category">Bio</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Eliminar palabras prohibidas del vocabulario en todos los posts activos</span><span class="check-category">Lenguaje</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Redefinir highlights: Transformaciones / Ciclos de Entrenamiento / FAQ Atletas / Suplementación</span><span class="check-category">Instagram</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Crear y publicar post de lanzamiento del Método DP con las 3 fases</span><span class="check-category">Contenido</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Reemplazar todos los CTAs pasivos por CTAs de autoridad</span><span class="check-category">CTAs</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Crear 1 carrusel "Ciencia vs. Mito" con evidencia (ej: ventana anabólica de 30 min)</span><span class="check-category">Contenido</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Fotografiar consultorio: balanza de bioimpedancia, scanner — estética "laboratorio"</span><span class="check-category">Estética</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Publicar resultados medibles de pacientes: % grasa, masa magra, evolución (con permiso)</span><span class="check-category">Contenido</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Actualizar mensaje automático de WhatsApp con CTA de autoridad y link a formulario</span><span class="check-category">WhatsApp</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Separar feed en 4 pilares visuales con estética consistente (sin mezclar públicos)</span><span class="check-category">Estética</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Contactar 2–3 gimnasios hardcore de Rosario para colaboraciones de contenido</span><span class="check-category">Comunidad</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Establecer protocolo de respuesta a DMs: tono, formato y CTA de conversión</span><span class="check-category">Canales</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Auditar y archivar todo post con contenido básico que baje el nivel percibido del perfil</span><span class="check-category">Auditoría</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-wrap"><div class="check-box"><span class="check-icon">✓</span></div></div><span class="check-text">Validar la paleta Muted Pastels con Delfina y definir aplicación en feed, stories y materiales</span><span class="check-category">Identidad Visual</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">DP<span>.</span>NUTRI</div>
+  <div class="footer-meta">
+    Guía de Tono de Marca v2.0<br>
+    Lic. Delfina Prieto · Rosario, Argentina<br>
+    Alto Rendimiento Estético
+  </div>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  sections.forEach(s => obs.observe(s));
+
+  function updateSlider(id, val) {
+    document.getElementById('fill-'+id).style.width = val+'%';
+    document.getElementById('thumb-'+id).style.left = val+'%';
+  }
+
+  function selectName(card) {
+    document.querySelectorAll('.metodo-name-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  }
+
+  function toggleCheck(item) {
+    item.classList.toggle('done');
+    const total = document.querySelectorAll('.check-item').length;
+    const done  = document.querySelectorAll('.check-item.done').length;
+    document.getElementById('progress-fill').style.width = (done/total*100)+'%';
+    document.getElementById('progress-text').textContent = done+' de '+total+' acciones completadas';
+  }
+</script>
+</body>
+</html>
